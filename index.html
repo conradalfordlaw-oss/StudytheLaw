@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PropLaw Quiz — Real Property Study Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- HEADER (always visible) -->
+  <div class="header">
+    <div class="logo" id="logo">⚖️ PropLaw Quiz</div>
+    <div class="header-right">
+      <button class="back-btn hidden" id="back-btn">← Back to Menu</button>
+      <div class="score-pill hidden" id="score-pill">
+        <span class="score-label">Score</span>
+        <span class="score-value score-positive" id="score-display">0</span>
+      </div>
+      <div class="streak-pill" id="streak-pill">🔥 <span id="streak-count">0</span></div>
+    </div>
+  </div>
+
+  <!-- LANDING -->
+  <div id="landing" class="landing">
+    <h1 class="landing-title">Real Property Study Suite</h1>
+    <p class="landing-subtitle">Pick your weapon. Three modes, one set of bar-ready fundamentals.</p>
+    <div class="mode-grid">
+      <div class="mode-card" data-mode="sa">
+        <div class="mode-emoji">📝</div>
+        <div class="mode-name">Short Answer</div>
+        <p class="mode-desc">The classic 20-card flashcard drill. Type out your answer; the grader measures key-term overlap.</p>
+        <span class="mode-count" id="count-sa">— cards</span>
+      </div>
+      <div class="mode-card" data-mode="mcq">
+        <div class="mode-emoji">🎯</div>
+        <div class="mode-name">Multiple Choice</div>
+        <p class="mode-desc">Bar-style MCQs from Chapters 7 & 8 — leasehold estates, subleases, conveyancing, deeds, and recording.</p>
+        <span class="mode-count" id="count-mcq">— questions</span>
+      </div>
+      <div class="mode-card" data-mode="essay">
+        <div class="mode-emoji">✍️</div>
+        <div class="mode-name">Essay</div>
+        <p class="mode-desc">Full practice essay prompts from Ch. 7 & Ch. 9. Draft your answer, then compare against an issue-spotting checklist.</p>
+        <span class="mode-count" id="count-essay">— prompts</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ SCREEN (shared by SA / MCQ / Essay) -->
+  <div id="quiz-screen" class="hidden">
+    <div class="progress-container">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <span class="progress-text" id="progress-text">1 / 1</span>
+    </div>
+
+    <div class="card-container" id="card-container">
+      <div class="category-badge" id="category-badge"></div>
+      <h2 class="question-text" id="question-text"></h2>
+      <div class="essay-meta hidden" id="essay-meta"></div>
+    </div>
+
+    <!-- Short Answer / Essay textarea input -->
+    <div class="input-section hidden" id="input-section">
+      <textarea class="textarea" id="user-answer" rows="6" placeholder="Type your answer here..."></textarea>
+      <button class="submit-btn" id="submit-btn" disabled>Submit Answer</button>
+      <p class="hint-text" id="hint-text">Ctrl+Enter to submit</p>
+    </div>
+
+    <!-- MCQ options -->
+    <div class="input-section hidden" id="mcq-section">
+      <div class="options-list" id="options-list"></div>
+      <button class="submit-btn" id="mcq-submit-btn" disabled>Submit Answer</button>
+    </div>
+
+    <!-- Feedback -->
+    <div class="feedback-container hidden" id="feedback-container">
+      <div class="feedback-card" id="feedback-card">
+        <div class="feedback-header">
+          <span class="feedback-emoji" id="feedback-emoji"></span>
+          <div class="percentage-badge" id="percentage-badge"></div>
+        </div>
+        <p class="points-text" id="points-text"></p>
+        <p class="funny-message" id="funny-message"></p>
+      </div>
+      <div class="answer-reveal" id="answer-reveal">
+        <h3 class="answer-title" id="answer-title">📖 Correct Answer:</h3>
+        <div class="answer-text" id="correct-answer-text"></div>
+      </div>
+      <button class="next-btn" id="next-btn">Next →</button>
+    </div>
+  </div>
+
+  <!-- GAME OVER -->
+  <div id="game-over-screen" class="game-over hidden"></div>
+
+</div>
+
+<script src="data/sa.js"></script>
+<script src="data/mcq.js"></script>
+<script src="data/essays.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
