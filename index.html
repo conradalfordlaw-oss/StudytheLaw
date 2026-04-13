@@ -3,127 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PropLaw Quiz — Real Property Flashcards</title>
+<title>PropLaw Quiz — Real Property Study Suite</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{min-height:100vh;background:#0f0f0f;font-family:'Cormorant Garamond',Georgia,serif;color:#e8e2d6}
-.app{max-width:720px;margin:0 auto;padding:20px}
-
-/* Header */
-.header{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #2a2520;margin-bottom:20px}
-.logo{font-size:20px;font-weight:700;color:#c9a96e;letter-spacing:.5px}
-.header-right{display:flex;align-items:center;gap:10px}
-.score-pill{display:flex;flex-direction:column;align-items:center;background:#1a1814;border:1px solid #2a2520;border-radius:12px;padding:6px 16px}
-.score-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#777;font-family:'DM Sans',sans-serif}
-.score-value{font-size:22px;font-weight:700;font-family:'DM Sans',sans-serif;transition:color .3s}
-.score-positive{color:#2d6a4f}
-.score-negative{color:#9d0208}
-.streak-pill{background:linear-gradient(135deg,#92400e,#b45309);border-radius:20px;padding:6px 14px;font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;display:none}
-.streak-pill.visible{display:block}
-
-/* Progress */
-.progress-container{display:flex;align-items:center;gap:12px;margin-bottom:24px}
-.progress-bar{flex:1;height:4px;background:#1a1814;border-radius:2px;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,#c9a96e,#d4b896);border-radius:2px;transition:width .5s ease;width:0}
-.progress-text{font-size:12px;color:#666;font-family:'DM Sans',sans-serif;white-space:nowrap}
-
-/* Card */
-.card-container{background:linear-gradient(145deg,#1c1915,#1a1611);border:1px solid #2a2520;border-radius:16px;padding:28px 24px;margin-bottom:20px;box-shadow:0 8px 32px rgba(0,0,0,.3);animation:fadeSlideIn .4s ease}
-.category-badge{display:inline-block;font-size:11px;font-family:'DM Sans',sans-serif;text-transform:uppercase;letter-spacing:1.5px;color:#c9a96e;background:rgba(201,169,110,.1);border:1px solid rgba(201,169,110,.2);border-radius:6px;padding:4px 10px;margin-bottom:16px}
-.question-text{font-size:20px;line-height:1.5;font-weight:400;color:#f0ece4;font-style:italic}
-
-/* Input */
-.input-section{margin-bottom:20px;animation:fadeSlideIn .3s ease}
-.textarea{width:100%;padding:16px;font-size:15px;font-family:'Cormorant Garamond',Georgia,serif;line-height:1.6;background:#1a1814;border:1px solid #2a2520;border-radius:12px;color:#e8e2d6;resize:vertical;outline:none;transition:border-color .2s}
-.textarea:focus{border-color:#c9a96e}
-.textarea::placeholder{color:#555}
-.submit-btn{width:100%;padding:14px;margin-top:12px;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:600;letter-spacing:.5px;background:linear-gradient(135deg,#c9a96e,#b8944f);color:#0f0f0f;border:none;border-radius:12px;cursor:pointer;transition:transform .15s,opacity .2s}
-.submit-btn:hover{transform:scale(1.01)}
-.submit-btn:disabled{opacity:.4;cursor:default;transform:none}
-.hint-text{text-align:center;font-size:11px;color:#555;margin-top:8px;font-family:'DM Sans',sans-serif}
-
-/* Feedback */
-.feedback-container{margin-top:8px;animation:fadeSlideIn .4s ease}
-.feedback-card{border-radius:16px;border:2px solid;padding:24px;text-align:center;margin-bottom:16px}
-.feedback-pass{border-color:#2d6a4f;background:linear-gradient(135deg,#f0fdf4,#dcfce7)}
-.feedback-fail{border-color:#9d0208;background:linear-gradient(135deg,#fef2f2,#fecaca)}
-.feedback-header{display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:12px}
-.feedback-emoji{font-size:48px}
-.percentage-badge{font-size:28px;font-weight:800;color:#fff;border-radius:14px;padding:8px 20px;font-family:'DM Sans',sans-serif}
-.percentage-pass{background:#2d6a4f}
-.percentage-fail{background:#9d0208}
-.points-text{font-size:18px;font-weight:700;margin:8px 0;font-family:'DM Sans',sans-serif}
-.points-pass{color:#2d6a4f}
-.points-fail{color:#9d0208}
-.funny-message{font-size:15px;font-style:italic;color:#333;margin:8px 0 0}
-
-.answer-reveal{background:#1c1915;border:1px solid #2a2520;border-radius:12px;padding:20px;margin-bottom:16px}
-.answer-title{font-size:13px;font-family:'DM Sans',sans-serif;text-transform:uppercase;letter-spacing:1px;color:#c9a96e;margin-bottom:12px}
-.answer-text{font-size:14px;line-height:1.7;color:#bbb}
-
-.next-btn{width:100%;padding:14px;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:600;background:#e8e2d6;color:#0f0f0f;border:none;border-radius:12px;cursor:pointer;margin-bottom:40px;transition:transform .15s}
-.next-btn:hover{transform:scale(1.01)}
-
-/* Game Over */
-.game-over{text-align:center;padding:32px 20px;animation:fadeSlideIn .5s ease}
-.grade-badge{display:inline-block;font-size:64px;font-weight:800;font-family:'DM Sans',sans-serif;color:#c9a96e;background:rgba(201,169,110,.1);border:3px solid #c9a96e;border-radius:24px;width:100px;height:100px;line-height:100px;margin-bottom:20px}
-.game-over h1{font-size:28px;color:#f0ece4;margin-bottom:8px}
-.game-over .subtitle{font-size:15px;font-style:italic;color:#999;margin-bottom:28px}
-.stats-row{display:flex;justify-content:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
-.stat-box{display:flex;flex-direction:column;align-items:center;background:#1a1814;border:1px solid #2a2520;border-radius:12px;padding:14px 20px;min-width:90px}
-.stat-number{font-size:26px;font-weight:700;font-family:'DM Sans',sans-serif;color:#c9a96e}
-.stat-number.green{color:#2d6a4f}
-.stat-number.red{color:#9d0208}
-.stat-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#777;margin-top:4px;font-family:'DM Sans',sans-serif}
-
-.review-section{text-align:left;margin:24px 0}
-.review-title{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#c9a96e;margin-bottom:12px;font-family:'DM Sans',sans-serif}
-.review-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#1a1814;border:1px solid #2a2520;border-radius:8px;margin-bottom:6px;font-size:13px}
-.review-cat{font-family:'DM Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#9d0208;background:rgba(157,2,8,.1);padding:2px 8px;border-radius:4px;white-space:nowrap}
-.review-q{flex:1;color:#bbb;font-size:13px}
-.review-score{font-family:'DM Sans',sans-serif;font-weight:700;color:#9d0208;font-size:13px}
-
-.restart-btn{padding:14px 40px;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:600;background:linear-gradient(135deg,#c9a96e,#b8944f);color:#0f0f0f;border:none;border-radius:12px;cursor:pointer;transition:transform .15s}
-.restart-btn:hover{transform:scale(1.02)}
-
-.hidden{display:none!important}
-
-@keyframes fadeSlideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-</style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="app" id="app">
 
-  <!-- QUIZ SCREEN -->
-  <div id="quiz-screen">
-    <div class="header">
-      <div class="logo">⚖️ PropLaw Quiz</div>
-      <div class="header-right">
-        <div class="score-pill">
-          <span class="score-label">Score</span>
-          <span class="score-value score-positive" id="score-display">0</span>
-        </div>
-        <div class="streak-pill" id="streak-pill">🔥 <span id="streak-count">0</span></div>
+  <!-- HEADER (always visible) -->
+  <div class="header">
+    <div class="logo" id="logo">⚖️ PropLaw Quiz</div>
+    <div class="header-right">
+      <button class="back-btn hidden" id="back-btn">← Back to Menu</button>
+      <div class="score-pill hidden" id="score-pill">
+        <span class="score-label">Score</span>
+        <span class="score-value score-positive" id="score-display">0</span>
+      </div>
+      <div class="streak-pill" id="streak-pill">🔥 <span id="streak-count">0</span></div>
+    </div>
+  </div>
+
+  <!-- LANDING -->
+  <div id="landing" class="landing">
+    <h1 class="landing-title">Real Property Study Suite</h1>
+    <p class="landing-subtitle">Pick your weapon. Three modes, one set of bar-ready fundamentals.</p>
+    <div class="mode-grid">
+      <div class="mode-card" data-mode="sa">
+        <div class="mode-emoji">📝</div>
+        <div class="mode-name">Short Answer</div>
+        <p class="mode-desc">The classic 20-card flashcard drill. Type out your answer; the grader measures key-term overlap.</p>
+        <span class="mode-count" id="count-sa">— cards</span>
+      </div>
+      <div class="mode-card" data-mode="mcq">
+        <div class="mode-emoji">🎯</div>
+        <div class="mode-name">Multiple Choice</div>
+        <p class="mode-desc">Bar-style MCQs from Chapters 7 & 8 — leasehold estates, subleases, conveyancing, deeds, and recording.</p>
+        <span class="mode-count" id="count-mcq">— questions</span>
+      </div>
+      <div class="mode-card" data-mode="essay">
+        <div class="mode-emoji">✍️</div>
+        <div class="mode-name">Essay</div>
+        <p class="mode-desc">Full practice essay prompts from Ch. 7 & Ch. 9. Draft your answer, then compare against an issue-spotting checklist.</p>
+        <span class="mode-count" id="count-essay">— prompts</span>
       </div>
     </div>
+  </div>
 
+  <!-- QUIZ SCREEN (shared by SA / MCQ / Essay) -->
+  <div id="quiz-screen" class="hidden">
     <div class="progress-container">
       <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-      <span class="progress-text" id="progress-text">1 / 19</span>
+      <span class="progress-text" id="progress-text">1 / 1</span>
     </div>
 
     <div class="card-container" id="card-container">
       <div class="category-badge" id="category-badge"></div>
       <h2 class="question-text" id="question-text"></h2>
+      <div class="essay-meta hidden" id="essay-meta"></div>
     </div>
 
-    <div class="input-section" id="input-section">
-      <textarea class="textarea" id="user-answer" rows="6" placeholder="Type your answer here... be thorough! Include key terms, definitions, and distinctions."></textarea>
+    <!-- Short Answer / Essay textarea input -->
+    <div class="input-section hidden" id="input-section">
+      <textarea class="textarea" id="user-answer" rows="6" placeholder="Type your answer here..."></textarea>
       <button class="submit-btn" id="submit-btn" disabled>Submit Answer</button>
-      <p class="hint-text">Ctrl+Enter to submit</p>
+      <p class="hint-text" id="hint-text">Ctrl+Enter to submit</p>
     </div>
 
+    <!-- MCQ options -->
+    <div class="input-section hidden" id="mcq-section">
+      <div class="options-list" id="options-list"></div>
+      <button class="submit-btn" id="mcq-submit-btn" disabled>Submit Answer</button>
+    </div>
+
+    <!-- Feedback -->
     <div class="feedback-container hidden" id="feedback-container">
       <div class="feedback-card" id="feedback-card">
         <div class="feedback-header">
@@ -134,235 +86,21 @@ body{min-height:100vh;background:#0f0f0f;font-family:'Cormorant Garamond',Georgi
         <p class="funny-message" id="funny-message"></p>
       </div>
       <div class="answer-reveal" id="answer-reveal">
-        <h3 class="answer-title">📖 Correct Answer:</h3>
-        <p class="answer-text" id="correct-answer-text"></p>
+        <h3 class="answer-title" id="answer-title">📖 Correct Answer:</h3>
+        <div class="answer-text" id="correct-answer-text"></div>
       </div>
-      <button class="next-btn" id="next-btn">Next Card →</button>
+      <button class="next-btn" id="next-btn">Next →</button>
     </div>
   </div>
 
-  <!-- GAME OVER SCREEN -->
+  <!-- GAME OVER -->
   <div id="game-over-screen" class="game-over hidden"></div>
 
 </div>
 
-<script>
-const flashcards=[
-{id:378,category:"EPL 5",question:"What is an easement appurtenant?",answer:'An easement appurtenant is an easement granted to provide a benefit to a certain piece of land. The parcel of land possessed by the individual who holds the easement is known as the "dominant tenement" (or "dominant estate"); the piece of land "burdened" by the easement is known as the "servient tenement" (or "servient estate," or "burdened estate"). You can easily recognize an easement appurtenant (as distinguished from its opposite, an easement "in gross"), because an easement appurtenant must involve at least two pieces of land; an easement in gross involves only one, the servient or burdened estate.'},
-{id:379,category:"EPL 6",question:"What is an easement in gross?",answer:'An easement in gross benefits a specified individual or business, as opposed to a specified piece of land. The most common type of easement in gross is that of a public utility. For example, an electric utility receives the right to place its power transmission lines across an owner\'s property; the utility has an easement in gross, because the easement benefits that utility, without regard to whether the utility owns any land nearby. The opposite of an easement in gross, an easement appurtenant, benefits a specific piece of land. You can tell the difference by looking at the number of pieces of land involved. An easement in gross involves only one piece of land, called the servient estate; an easement appurtenant must involve at least two pieces of land, a dominant and a servient estate.'},
-{id:380,category:"EPL 7",question:"Which are more common, easements appurtenant or easements in gross?",answer:'Most easements are appurtenant easements. Rule of Construction: If the grant is ambiguous, most courts construe it as creating an appurtenant easement, not an easement in gross.'},
-{id:381,category:"EPL 8",question:"Why does it matter whether an easement is characterized as an easement appurtenant or an easement in gross?",answer:'It matters with respect to conveyancing of the estate(s) in question. Benefit-Side Transfer: An easement appurtenant is considered part of the dominant estate; when the ownership of the estate is transferred, the benefit of the easement is automatically transferred too. Under the traditional rule, the benefit of an easement in gross cannot be conveyed unless the holder of the servient estate expressly permits transfer. However, according to most modern courts, the benefits of commercial easements in gross (those granted for business reasons) are freely alienable, barring an express intent otherwise. Burden-Side Transfer: There is no difference between the two types. Conveying the servient estate automatically also conveys the burden of the easement (whether appurtenant or in gross), as long as the grantee of the servient estate had notice of the easement (actual, constructive, or inquiry) at the time she took.'},
-{id:382,category:"EPL 9",question:"What is the minimum number of land tracts necessary for an appurtenant easement?",answer:'Two — there must be both a dominant estate and a servient estate. This feature is an easy means of distinguishing appurtenant easements from easements in gross; easements in gross involve only one piece of land, a servient estate. Note: In the case of subsequent subdivisions on the dominant side, there may end up being more than one dominant estate.'},
-{id:383,category:"EPL 10",question:"What is a servient estate/tenement?",answer:'It is the land that the holder of an easement (the dominant estate holder) has the right to use — in other words, the servient estate is the estate that is burdened by the easement. Note: The servient estate is almost always immediately adjacent to the dominant estate.'},
-{id:384,category:"EPL 11",question:"What is the relationship of the dominant and servient estates?",answer:'An appurtenant easement always involves at least two parcels of land, a servient estate and a dominant estate. The parcels are described in that manner because basically the land that is being benefited from the easement (the dominant estate) is dominating, i.e., dictating to, the servient estate (the land where the easement is physically located) by placing burdens on the servient estate. The most common kind of easement appurtenant is a right-of-way, where the holder of the dominant estate gets to pass over the servient estate to have access to, say, a public road or a body of water.'},
-{id:385,category:"EPL 12",question:"Under what circumstances is a purchaser of the servient estate bound by an easement?",answer:'Only when the purchaser has notice of the easement, whether actual, constructive, or inquiry, at the time they take the servient estate. Note that this means the dominant holder\'s interest is possible to lose if the servient estate is transferred to a bona fide purchaser for value without notice. The easement holder should ensure the easement is recorded, either as part of the deed or by a separate recording, to provide constructive notice to future purchasers of the servient estate.'},
-{id:386,category:"EPL 13",question:"What is an express easement?",answer:'As the name implies, it is an easement that is created by explicit language. The grant can be either in a deed, or in a will. It can take the form of an easement by affirmative grant (i.e., it grants the grantee an easement over the grantor\'s property), or an easement by reservation (i.e., the grantor owns two parcels, conveys Parcel 1 to the grantee, and reserves to the grantor an easement over Parcel 1 to the benefit of Parcel 2, which is retained by the grantor). Requirement of Writing: The Statute of Frauds requires that an express easement be memorialized in a writing signed by the party whose land is to be subject to the easement. The document should specify the location and width of the easement, and its purpose.'},
-{id:387,category:"EPL 14",question:"What are the requirements for an easement implied by prior use?",answer:'For an easement implied by prior use to come into existence, all of the following must be true: 1. The now-dominant and now-servient estates were previously under common ownership and were severed from each other at the time the easement is said to have come into existence. 2. During the time of common ownership just before severance, the now-dominant estate used the now-servient estate in a manner that was apparent and continuous, making the use a quasi-easement (i.e., visible or reasonably discoverable like utility lines or pipes). 3. Immediately after severance, the use was reasonably necessary for enjoyment of the dominant estate. Scope of Easement: Usually determined by the scope of the pre-severance use; but the scope may be modified by the dominant holder if the needs of dominant estate reasonably require it.'},
-{id:388,category:"EPL 15",question:"Are implied easements by prior use considered easements appurtenant or easements in gross?",answer:'They are appurtenant easements (i.e., they are considered annexed to the dominant estate). This is so because it was the transfer of one of two pieces of property under common ownership that created the implied easement by prior use; thus, the easement is inextricably connected with the ownership of the parcel that benefited from the prior use. Significance of the Appurtenant/In Gross Distinction: Conveyancing. An easement appurtenant is automatically included in a later conveyance of the dominant estate; the land and the easement cannot be separated.'},
-{id:389,category:"EPL 16",question:"Must easements implied by prior use be in writing to satisfy the Statute of Frauds?",answer:'Trick question, to which the answer is no. Easements implied by prior use are created by operation of law, not expression of the parties, so they cannot be in writing. An easement implied by prior use arises when a tract of land under one owner is severed into two parcels (so that one of the two parcels can be conveyed), and one parcel had been used pre-severance for the benefit of the other parcel. There cannot be an easement implied by prior use where there was never common ownership; furthermore, the implied easement arises immediately and without writing when the common ownership is severed.'},
-{id:391,category:"EPL 18",question:"What is the difference between an easement implied by prior use and a quasi-easement?",answer:'Both involve one parcel\'s use to the benefit of another, but easements differ from quasi-easements based on whether ownership of the dominant and servient tenements has been severed yet by conveyance. Before either of the tracts has been conveyed (so that both are owned by the same person), the easement is a quasi-easement (it cannot be a true easement, because a person cannot have an easement implied by use of his own land). After one parcel has been conveyed, the right to use one of the parcels for the benefit of the other becomes an easement implied by prior use (made by grant or by reservation, depending on which tract is transferred away).'},
-{id:392,category:"EPL 19",question:"When does an easement by necessity arise?",answer:'It arises when a parcel is severed into two pieces (one of which is conveyed), and the use of one parcel is strictly necessary for the reasonable enjoyment of the other. An easement by necessity arises when, immediately post-severance, one of the parcels is landlocked, i.e., has no legal access to a public road without crossing over (using) the other parcel. Requirements: 1. The necessity must be strict rather than reasonable; 2. The parcels must have been under common ownership just before the conveyance; and 3. The necessity must come into existence at the time of, and be caused by, the conveyance that breaks up the common ownership. Scope of Easement: Limited to the extent of the necessity. Distinguished from easement by prior use: an easement by necessity does not require prior use before severance, but does require strict necessity.'},
-{id:449,category:"EPL 57",question:"What is the difference between an easement and a profit?",answer:'An easement allows the holder to enter another\'s land. A profit, on the other hand, allows the holder to take something from the land (such as minerals, timber, or game). Profits are created and transferred in the same way as easements (except that there cannot be an implied profit created by necessity). A profit is also considered a possessory interest protected by the Takings Clause, so that if the servient estate is taken by eminent domain, the profit or easement holder will be entitled to compensation.'},
-{id:465,category:"CONVC 7",question:"Under the traditional approach, what are the elements necessary for the burden of a real covenant to run?",answer:'For the burden of a real covenant to run, the analysis must find that: 1. There is a promise in writing; 2. The promise touches and concerns the land to be burdened; 3. The original parties intended that the promise would burden successors to the promisor\'s estate; 4. Horizontal privity, which means there was a property relationship between the original promisor and promisee (so they could not just be neighbors with no pre-existing property relationship); 5. Full vertical privity, which means the promisor assigned his full interest in the property to his successor; and 6. The promisor\'s successor took with some sort of notice (actual, record or inquiry) of the promise.'},
-{id:466,category:"CONVC 8",question:"In brief, what is an equitable servitude, and how does it differ from a real covenant?",answer:'An equitable servitude, like a real covenant, is a promise by the holder of a piece of land to conduct a stated activity on or make a stated use of his property (or a promise not to do so). Like a real covenant, an equitable servitude is binding on his successors. But equitable servitudes are different from real covenants in two major ways: (1) servitudes are traditionally enforceable only in equity (i.e., by means of injunctions and orders of specific performance) whereas covenants are enforceable only at law (i.e., by judgments for damages); and (2) a servitude has to meet somewhat fewer requirements in order to run on the benefit and burden sides, than a real covenant does.'},
-{id:467,category:"CONVC 9",question:"What are the elements required for the benefits of an equitable servitude to run with the land?",answer:'For the benefits of the equitable servitude to run, it must be the case that: 1. There was a promise in writing made by the holder of land to someone else (the promisee); 2. The promise touches and concerns the land to be burdened and provides a benefit to land; 3. The original parties intended that the promise would benefit the promisee\'s successors. Note: There is no requirement (as there was traditionally for the running of the burden of a real covenant) that the promise touch and concern any benefited land, or that the assignee receive possession and some land-interest from the original promisee.'},
-{id:468,category:"CONVC 10",question:"What are the elements required for the burdens of an equitable servitude to run with the land?",answer:'For the burdens of the equitable servitude to run, it must be the case that: 1. There was a promise in writing made by the holder of land to someone else; 2. The promise touches and concerns the land to be burdened; 3. The original parties intended that the promise would burden the promisor\'s successors; and 4. The promisor\'s successor took with some sort of notice (actual, record or inquiry) of the promise. Note: Unlike for real covenants, there is no requirement of horizontal privity or full vertical privity for the burden of an equitable servitude to run.'}
-];
-
-const positiveMessages=[
-"You're basically a property law GENIUS! Future Supreme Court Justice over here!",
-"Easements? More like EASY-ments for you! Nailed it!",
-"The bar examiners are SHAKING right now!",
-"Your professor would shed a tear of pride!",
-"Blackstone just rolled over in his grave... out of RESPECT!",
-"You could teach this class! Actually, please don't. Stay humble.",
-"Someone call the ABA — we've got a prodigy here!",
-"That answer was so good, the dominant estate just bowed to YOU!",
-"Even the servient estate is impressed, and it's usually burdened!",
-"You remembered horizontal privity?! Are you even human?!",
-"Your brain is an easement appurtenant — permanently attached to knowledge!",
-"Plot twist: YOU wrote the Restatement of Property!",
-"The Statute of Frauds can't even fraud YOU!",
-"Covenant running with the land? More like knowledge running with YOUR brain!",
-"If property law was a sport, you'd be the GOAT!"
-];
-
-const negativeMessages=[
-"Yikes! That answer was more landlocked than a parcel without road access!",
-"The servient estate called — it wants its dignity back!",
-"Did you study with your textbook closed? And upside down? Underwater?",
-"That answer violated the Statute of Frauds... and the Statute of Making Sense!",
-"Even a quasi-easement has more substance than that answer!",
-"Your professor just felt a disturbance in the force... and it was YOUR answer!",
-"That was rougher than a title search in a county with no records!",
-"If that answer were a covenant, it would NOT run with the land!",
-"OBJECTION! Your answer lacks foundation... and everything else!",
-"The bar exam just filed a restraining order against you!",
-"That answer had less privity than two strangers on a bus!",
-"Houston, we have a problem... and it's your understanding of easements!",
-"Your answer was so wrong, it created an easement by necessity — you NEED to study more!",
-"Even an easement in gross wouldn't benefit from that answer!",
-"Plot twist: the real easement was the knowledge you DIDN'T gain along the way!"
-];
-
-// State
-let shuffled=[], currentIndex=0, totalScore=0, answered=0, streak=0, bestStreak=0, history=[];
-
-// DOM
-const $=id=>document.getElementById(id);
-const scoreDisplay=$('score-display'), streakPill=$('streak-pill'), streakCount=$('streak-count');
-const progressFill=$('progress-fill'), progressText=$('progress-text');
-const categoryBadge=$('category-badge'), questionText=$('question-text');
-const inputSection=$('input-section'), userAnswer=$('user-answer'), submitBtn=$('submit-btn');
-const feedbackContainer=$('feedback-container'), feedbackCard=$('feedback-card');
-const feedbackEmoji=$('feedback-emoji'), percentageBadge=$('percentage-badge');
-const pointsText=$('points-text'), funnyMessage=$('funny-message');
-const correctAnswerText=$('correct-answer-text'), nextBtn=$('next-btn');
-const quizScreen=$('quiz-screen'), gameOverScreen=$('game-over-screen');
-const cardContainer=$('card-container');
-
-function shuffle(arr){let a=[...arr];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-
-function tokenize(text){return text.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(w=>w.length>2)}
-
-function computeSimilarity(userText,correctText){
-  const userTokens=tokenize(userText), correctTokens=tokenize(correctText);
-  if(!userTokens.length)return 0;
-  const correctSet=new Set(correctTokens), userSet=new Set(userTokens);
-  const stopWords=new Set(['which','there','their','where','would','could','should','about','other','because','between','through','being','these','those','after','before','under','means','words']);
-  const keyTerms=new Set();
-  correctTokens.filter(w=>w.length>4&&!stopWords.has(w)).forEach(w=>keyTerms.add(w));
-  let keyMatches=0,keyTotal=keyTerms.size||1;
-  keyTerms.forEach(t=>{if(userSet.has(t))keyMatches++});
-  const getBigrams=tokens=>{const b=new Set();for(let i=0;i<tokens.length-1;i++)b.add(tokens[i]+' '+tokens[i+1]);return b};
-  const userBigrams=getBigrams(userTokens),correctBigrams=getBigrams(correctTokens);
-  let bigramMatches=0,bigramTotal=correctBigrams.size||1;
-  correctBigrams.forEach(b=>{if(userBigrams.has(b))bigramMatches++});
-  let wordMatches=0;
-  correctSet.forEach(w=>{if(userSet.has(w))wordMatches++});
-  const wordScore=wordMatches/(correctSet.size||1);
-  const keyScore=keyMatches/keyTotal, bigramScore=bigramMatches/bigramTotal;
-  const combined=keyScore*.45+bigramScore*.25+wordScore*.3;
-  const lengthRatio=userTokens.length/correctTokens.length;
-  const lengthPenalty=lengthRatio<.15?.4:lengthRatio<.3?.7:1;
-  return Math.min(combined*lengthPenalty,1);
-}
-
-function randFrom(arr){return arr[Math.floor(Math.random()*arr.length)]}
-
-function renderCard(){
-  const card=shuffled[currentIndex];
-  categoryBadge.textContent=card.category+' — REAL PROPERTY';
-  questionText.textContent=card.question;
-  progressText.textContent=(currentIndex+1)+' / '+shuffled.length;
-  progressFill.style.width=(currentIndex/shuffled.length*100)+'%';
-  inputSection.classList.remove('hidden');
-  feedbackContainer.classList.add('hidden');
-  userAnswer.value='';
-  submitBtn.disabled=true;
-  cardContainer.style.animation='none';
-  cardContainer.offsetHeight;
-  cardContainer.style.animation='fadeSlideIn .4s ease';
-}
-
-function handleSubmit(){
-  const card=shuffled[currentIndex];
-  const text=userAnswer.value.trim();
-  if(!text)return;
-  const similarity=computeSimilarity(text,card.answer);
-  const percentage=Math.round(similarity*100);
-  const isPass=percentage>=70;
-  const points=isPass?Math.round(similarity*10):-5;
-  totalScore+=points;answered++;
-  if(isPass){streak++;if(streak>bestStreak)bestStreak=streak}else{streak=0}
-  history.push({question:card.question,category:card.category,percentage,points,passed:isPass});
-
-  // Update UI
-  scoreDisplay.textContent=totalScore;
-  scoreDisplay.className='score-value '+(totalScore>=0?'score-positive':'score-negative');
-  streakPill.classList.toggle('visible',streak>=2);
-  streakCount.textContent=streak;
-  progressFill.style.width=((currentIndex+1)/shuffled.length*100)+'%';
-
-  // Show feedback
-  inputSection.classList.add('hidden');
-  feedbackContainer.classList.remove('hidden');
-  feedbackCard.className='feedback-card '+(isPass?'feedback-pass':'feedback-fail');
-  feedbackEmoji.textContent=isPass?'🎉':'💀';
-  percentageBadge.textContent=percentage+'%';
-  percentageBadge.className='percentage-badge '+(isPass?'percentage-pass':'percentage-fail');
-  pointsText.textContent=(points>0?'+':'')+points+' points';
-  pointsText.className='points-text '+(isPass?'points-pass':'points-fail');
-  funnyMessage.textContent=randFrom(isPass?positiveMessages:negativeMessages);
-  correctAnswerText.textContent=card.answer;
-  nextBtn.textContent=(currentIndex+1>=shuffled.length)?'See Results':'Next Card →';
-
-  feedbackContainer.style.animation='none';
-  feedbackContainer.offsetHeight;
-  feedbackContainer.style.animation='fadeSlideIn .4s ease';
-  feedbackContainer.scrollIntoView({behavior:'smooth',block:'center'});
-}
-
-function handleNext(){
-  if(currentIndex+1>=shuffled.length){showGameOver();return}
-  currentIndex++;
-  renderCard();
-}
-
-function showGameOver(){
-  quizScreen.classList.add('hidden');
-  gameOverScreen.classList.remove('hidden');
-  const passCount=history.filter(h=>h.passed).length;
-  const failCount=history.filter(h=>!h.passed).length;
-  const avgScore=history.length?Math.round(history.reduce((a,h)=>a+h.percentage,0)/history.length):0;
-  const grade=avgScore>=90?'A':avgScore>=80?'B':avgScore>=70?'C':avgScore>=60?'D':'F';
-  const msgs={A:"You're ready for the bar! Or at least this section of it!",B:"Solid work! A few more study sessions and you're golden!",C:"You passed... barely. The servient estate is judging you.",D:"The textbook is crying. Please read it again.",F:"Did you think 'easement' was a type of furniture? Back to page 1!"};
-
-  let failCards='';
-  if(failCount>0){
-    failCards='<div class="review-section"><h3 class="review-title">Cards to Review:</h3>';
-    history.filter(h=>!h.passed).forEach(h=>{
-      failCards+=`<div class="review-item"><span class="review-cat">${h.category}</span><span class="review-q">${h.question}</span><span class="review-score">${h.percentage}%</span></div>`;
-    });
-    failCards+='</div>';
-  }
-
-  gameOverScreen.innerHTML=`
-    <div class="grade-badge">${grade}</div>
-    <h1>Quiz Complete!</h1>
-    <p class="subtitle">${msgs[grade]}</p>
-    <div class="stats-row">
-      <div class="stat-box"><span class="stat-number">${totalScore}</span><span class="stat-label">Total Points</span></div>
-      <div class="stat-box"><span class="stat-number">${avgScore}%</span><span class="stat-label">Avg Accuracy</span></div>
-      <div class="stat-box"><span class="stat-number">${bestStreak}</span><span class="stat-label">Best Streak</span></div>
-    </div>
-    <div class="stats-row">
-      <div class="stat-box" style="border-color:#2d6a4f"><span class="stat-number green">${passCount}</span><span class="stat-label">Passed</span></div>
-      <div class="stat-box" style="border-color:#9d0208"><span class="stat-number red">${failCount}</span><span class="stat-label">Failed</span></div>
-    </div>
-    ${failCards}
-    <button class="restart-btn" onclick="restart()">Shuffle & Try Again</button>
-  `;
-}
-
-function restart(){
-  shuffled=shuffle(flashcards);currentIndex=0;totalScore=0;answered=0;streak=0;bestStreak=0;history=[];
-  scoreDisplay.textContent='0';scoreDisplay.className='score-value score-positive';
-  streakPill.classList.remove('visible');
-  quizScreen.classList.remove('hidden');
-  gameOverScreen.classList.add('hidden');
-  renderCard();
-}
-
-// Events
-userAnswer.addEventListener('input',()=>{submitBtn.disabled=!userAnswer.value.trim()});
-userAnswer.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.metaKey||e.ctrlKey)&&!submitBtn.disabled){e.preventDefault();handleSubmit()}});
-submitBtn.addEventListener('click',handleSubmit);
-nextBtn.addEventListener('click',handleNext);
-
-// Init
-shuffled=shuffle(flashcards);
-renderCard();
-</script>
+<script src="data/sa.js"></script>
+<script src="data/mcq.js"></script>
+<script src="data/essays.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
